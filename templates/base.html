@@ -15,6 +15,20 @@
         </div>
     </header>
     
+    {% if user %}
+    <nav class="navigation">
+        <div class="container">
+            <a href="{{ url_for('index.index') }}">メニュー一覧</a> | 
+            <a href="{{ url_for('analysis.analysis_dashboard') }}">データ分析</a> | 
+            
+            {% if user.is_admin %}
+            <a href="{{ url_for('admin.admin_dashboard') }}">管理者ページ</a> | 
+            {% endif %}
+            
+            <a href="{{ url_for('auth.logout') }}">ログアウト</a>
+        </div>
+    </nav>
+    {% endif %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
         <div class="flash-messages">

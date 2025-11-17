@@ -4,6 +4,7 @@ from models import db
 from routes.index import index_bp
 from routes.auth import auth_bp
 from routes.analysis import analysis_bp
+from routes.admin import admin_bp
 
 def create_app():
     # Flaskのインスタンスを作成
@@ -19,6 +20,7 @@ def create_app():
     app.register_blueprint(index_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(analysis_bp)
+    app.register_blueprint(admin_bp)
     
     return app
 
