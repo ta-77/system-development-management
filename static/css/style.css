@@ -1,1 +1,159 @@
 /* CSSスタイル記述 */
+/* ===========================
+   全体の基本設定
+   =========================== */
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===========================
+   コンテナ
+   =========================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===========================
+   ヘッダー
+   =========================== */
+header.header {
+    background-color: #004080; /* 濃い青 */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header.header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* ===========================
+   ナビゲーション
+   =========================== */
+nav.navigation {
+    background-color: #0066cc; /* 明るめの青 */
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+nav.navigation a {
+    color: #fff;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav.navigation a:hover {
+    color: #ffcc00; /* ホバーで黄色 */
+}
+
+/* ===========================
+   テーブル
+   =========================== */
+table.menu-table,
+table.reviews-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+table.menu-table th,
+table.reviews-table th {
+    background-color: #004080;
+    color: #fff;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table.menu-table td,
+table.reviews-table td {
+    background-color: #ffffff;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+table.menu-table tr:nth-child(even),
+table.reviews-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* ===========================
+   フォーム
+   =========================== */
+div.auth-form {
+    background-color: #ffffff;
+    padding: 30px;
+    max-width: 400px;
+    margin: 30px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+div.auth-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #004080;
+}
+
+div.auth-form input[type="text"],
+div.auth-form input[type="password"],
+div.auth-form input[type="email"],
+div.auth-form button {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+div.auth-form button {
+    background-color: #0066cc;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+div.auth-form button:hover {
+    background-color: #004080;
+}
+
+/* ===========================
+   レスポンシブ対応
+   =========================== */
+@media (max-width: 768px) {
+    nav.navigation {
+        flex-direction: column;
+    }
+
+    nav.navigation a {
+        margin: 10px 0;
+    }
+
+    div.auth-form {
+        padding: 20px;
+        margin: 20px;
+    }
+}
