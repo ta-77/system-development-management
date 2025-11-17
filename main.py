@@ -20,11 +20,7 @@ def create_app():
     app.register_blueprint(index_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(analysis_bp)
-<<<<<<< HEAD
-    app.register_blueprint(admin_bp)
-=======
     app.register_blueprint(admin_bp)  # <<< 管理者機能のBlueprintをアプリに登録
->>>>>>> 8e7e5bc64dc2679e638386d248d72e7529c58902
     
     return app
 
