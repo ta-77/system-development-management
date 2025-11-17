@@ -1,7 +1,3 @@
-{% extends "base.html" %}
-
-{% block title %}データ分析 - 学食メニュー満足度アプリ{% endblock %}
-
 {% block content %}
 <div class="analysis-page">
     <div class="page-header">
@@ -13,13 +9,32 @@
     {% if charts %}
     <div class="charts-section">
 
+        {% if charts.category_ratings %}
+        <div class="chart-container">
+            <h3>カテゴリー別の平均評価</h3>
+            <p>各カテゴリーの「総合評価」「味」「量」「コスパ」の平均値です。<br>
+               (詳細評価が未入力のレビューは、その項目の平均計算から除外されています)
+            </p>
+            <img src="data:image/png;base64,{{ charts.category_ratings }}" alt="カテゴリ別平均評価">
+        </div>
+        {% endif %}
+
+        {% if charts.price_vs_rating %}
+        <div class="chart-container">
+            <h3>カテゴリー別の価格と総合評価の関係</h3>
+            <p>メニューの価格（X軸）と総合評価（Y軸）の関係をカテゴリ別に色分けした散布図です。</p>
+            <img src="data:image/png;base64,{{ charts.price_vs_rating }}" alt="価格と評価の散布図">
+        </div>
+        {% endif %}
 
         {% if charts.popular_menus %}
         <div class="chart-container">
-            <h3>話題メニュー TOP10</h3>
+            <h3>レビュー数が多いメニュー TOP10</h3>
+            <p>レビューが投稿された件数が多い、話題のメニューTOP10です。</p>
             <img src="data:image/png;base64,{{ charts.popular_menus }}" alt="話題メニュー">
         </div>
         {% endif %}
+        
     </div>
     {% else %}
     <div class="no-data">
