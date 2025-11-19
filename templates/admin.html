@@ -1,11 +1,170 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}管理者ページ - 学食メニュー満足度アプリ{% endblock %}
 
 {% block content %}
-  <h2>管理者ページ</h2>
-  <p>ここは管理者専用のダッシュボード（雛形）です。</p>
-  {% if user %}
-    <p>ログインユーザー: {{ user.username }}</p>
-  {% endif %}
+<div class="page-header">
+    <h2>管理者ダッシュボード</h2>
+</div>
+
+<div class="admin-section">
+    <h3>メニュー追加</h3>
+    <form action="{{ url_for('admin.add_menu') }}" method="POST">
+        <table class="menu-table">
+            <tr>
+                <th>メニュー名</th>
+                <td><input type="text" name="name" required placeholder="例: カツ丼"></td>
+            </tr>
+            <tr>
+                <th>価格 (円)</th>
+                <td><input type="number" name="price" required placeholder="500"></td>
+            </tr>
+            <tr>
+                <th>カテゴリ</th>
+                <td>
+                    <select name="category_id" required>
+                        <option value="">選択してください</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>説明</th>
+                <td><textarea name="description" rows="3" cols="40" placeholder="メニューの説明..."></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit" class="btn-primary">メニューを追加</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="admin-section">
+    <h3>メニュー一覧 (全 {{ menus|length }} 件)</h3>
+    <table class="menu-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>メニュー名</th>
+                <th>価格</th>
+                <th>カテゴリ</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for menu in menus %}
+            <tr>
+                <td>{{ menu.id }}</td>
+                <td>{{ menu.name }}</td>
+                <td>{{ menu.price }}円</td>
+                <td>{{ menu.category.name }}</td>
+                <td>
+                    <a href="{{ url_for('admin.delete_menu', id=menu.id) }}" onclick="return confirm('本当に「{{ menu.name }}」を削除しますか？');" style="color: red;">削除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="admin-section">
+    <h3>ユーザー一覧 (全 {{ users|length }} 件)</h3>
+    <table class="menu-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ユーザー名</th>
+                <th>管理者</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.username }}</td>
+                <td>{% if u.is_admin %}✓{% else %}-{% endif %}</td>
+                <td>
+                    {% if u.id == user.id %}
+                    (自分)
+                    {% else %}
+                    <a href="{{ url_for('admin.delete_user', id=u.id) }}" onclick="return confirm('本当に「{{ u.username }}」を削除しますか？');" style="color: red;">削除</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="admin-section">
+    <h3>レビュー一覧 (全 {{ reviews|length }} 件)</h3>
+    <table class="reviews-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ユーザー</th>
+                <th>メニュー</th>
+                <th>評価</th>
+                <th>コメント</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+            <tr>
+                <td>{{ review.id }}</td>
+                <td>{{ review.user.username }}</td>
+                <td>{{ review.menu.name }}</td>
+                <td>{{ review.rating }}</td>
+                <td>{{ review.comment|default('-', true)|truncate(20) }}</td>
+                <td>
+                    <a href="{{ url_for('admin.delete_review', id=review.id) }}" onclick="return confirm('本当にID:{{ review.id }} のレビューを削除しますか？');" style="color: red;">削除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* 管理者ページ専用の簡易スタイル */
+    .admin-section {
+        background-color: #fff;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .admin-section h3 {
+        margin-top: 0;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+        color: #333;
+    }
+    .btn-primary {
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-primary:hover {
+        background-color: #004494;
+    }
+    textarea {
+        width: 95%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    select, input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
 {% endblock %}
